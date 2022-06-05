@@ -1,0 +1,179 @@
+\ProvidesPackage{bean}[2022/06/03]
+
+%% Argument Processsing
+% Default arugments
+% We include "bean" in all arugments to avoid collisions with other packages
+\newif\ifbeanpkg\beanpkgtrue
+\newif\ifbeanmcro\beanmcrotrue
+\newif\ifbeanthm\beanthmtrue
+\newif\ifbeanpage\beanpagefalse
+\newif\ifbeansecthm\beansecthmfalse
+
+% Recieve arguments
+\DeclareOption{nopkg}{\beanpkgfalse}
+\DeclareOption{nomcro}{\beanmcrofalse}
+\DeclareOption{nothm}{\beanthmfalse}
+\DeclareOption{page}{\beanpagetrue} %this only does stuff if a koma-class is loaded 
+\DeclareOption{secthm}{\beansecthmtrue}
+
+\ProcessOptions\relax
+
+% Access title, author, date
+\providecommand{\thetitle}{\@title}
+\providecommand{\theauthor}{\@author}
+\providecommand{\thedate}{\@date}
+
+%% Package Setup
+\ifbeanpkg
+    \usepackage{amsmath, amssymb, amsthm, amsfonts}
+    \usepackage{thmtools}
+    \usepackage{mathtools}
+    \usepackage{enumitem}
+    \usepackage{bm}
+    \PassOptionsToPackage{usenames,svgnames,dvipsnames,table}{xcolor}
+    \usepackage{xcolor}
+    \usepackage{tikz}
+    \usepackage{tikz-cd}
+    \usepackage{float}
+    \usepackage{graphicx}
+    \usepackage{mathrsfs}
+    % Hyperref setup
+    \usepackage[colorlinks=true]{hyperref}
+    \hypersetup{urlcolor=RubineRed,linkcolor=RoyalBlue,citecolor=ForestGreen}
+\fi
+
+%% Macros (TODO)
+\ifbeanmcro
+
+\fi
+
+% Theorem setup 
+\ifbeanthm
+    \usepackage[framemethod=TikZ]{mdframed}
+
+    \mdfdefinestyle{mdbluebox}{
+    linewidth=1pt,
+    skipabove=12pt,
+    innerbottommargin=9pt,
+    skipbelow=2pt,
+    linecolor=blue,
+    nobreak=true,
+    backgroundcolor=TealBlue!5,
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries\color{blue},
+        mdframed={style=mdbluebox},
+        headpunct={\\[3pt]},
+        postheadspace={0pt}
+    ]{thmbluebox}
+
+    \mdfdefinestyle{mdpurplebox}{
+    linewidth=1pt,
+    skipabove=12pt,
+    innerbottommargin=9pt,
+    skipbelow=2pt,
+    linecolor=violet,
+    nobreak=true,
+    backgroundcolor=Violet!5,
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries\color{violet},
+        mdframed={style=mdpurplebox},
+        headpunct={\\[3pt]},
+        postheadspace={0pt}
+    ]{thmpurplebox}
+
+    \mdfdefinestyle{mdgreenbox}{
+    linewidth=1pt,
+    skipabove=12pt,
+    innerbottommargin=9pt,
+    skipbelow=2pt,
+    linecolor=MediumSeaGreen,
+    nobreak=true,
+    backgroundcolor=Lime!5,
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries\color{DarkGreen},
+        mdframed={style=mdgreenbox},
+        headpunct={\\[3pt]},
+        postheadspace={0pt}
+    ]{thmgreenbox}
+
+    \mdfdefinestyle{mdredbox}{
+    linewidth=1pt,
+    skipabove=12pt,
+    innerbottommargin=9pt,
+    skipbelow=2pt,
+    linecolor=red,
+    nobreak=true,
+    backgroundcolor=red!5,
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries\color{red},
+        mdframed={style=mdredbox},
+        headpunct={\\[3pt]},
+        postheadspace={0pt}
+    ]{thmredbox}
+
+    \mdfdefinestyle{mdyellowbox}{
+    linewidth=1pt,
+    skipabove=12pt,
+    innerbottommargin=9pt,
+    skipbelow=2pt,
+    linecolor=YellowOrange,
+    nobreak=true,
+    backgroundcolor=YellowOrange!5,
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries\color{DarkOrange},
+        mdframed={style=mdyellowbox},
+        headpunct={\\[3pt]},
+        postheadspace={0pt}
+    ]{thmyellowbox}
+
+    \ifbeansecthm
+        \declaretheorem[style=thmbluebox,name=Theorem,numberwithin=section]{thm}
+    \else
+        \declaretheorem[style=thmbluebox,name=Theorem]{thm}
+    \fi
+
+    \declaretheorem[style=thmpurplebox,name=Lemma,sibling=thm]{lem}
+    \declaretheorem[style=thmbluebox,name=Proposition,sibling=thm]{prop}
+    \declaretheorem[style=thmbluebox,name=Corollary,sibling=thm]{cor}
+    \declaretheorem[style=thmgreenbox,name=Example,sibling=thm]{ex}
+    \declaretheorem[style=thmredbox,name=Definition,sibling=thm]{dfn}
+    \declaretheorem[style=thmyellowbox,name=Fact,sibling=thm]{fact}
+    \declaretheorem[style=thmyellowbox,name=Conjecture,sibling=thm]{conj}
+
+    \declaretheorem[name=Remark,sibling=thm]{rem}
+    \declaretheorem[name=Problem,numbered=no]{prob}
+\fi
+
+\ifbeanpage
+    \@ifundefined{KOMAClassName}{}{
+    \usepackage{scrlayer-scrpage}
+    \usepackage[nodisplayskipstretch, onehalfspacing]{setspace}
+    \usepackage{etoolbox}
+
+    % Changes font from Computer Modern to Sans
+    \renewcommand{\familydefault}{\sfdefault}
+    % Section heading numbers in the margin
+    \renewcommand{\sectionlinesformat}[4]{\makebox[0pt][r]{#3}#4}
+
+    % Some page settings
+    \KOMAoptions{fontsize = 10pt, paper = letter, DIV = 20}
+    \KOMAoptions{numbers = noendperiod}
+    \makeatletter
+    \patchcmd{\@maketitle}{\huge}{\LARGE}{}{}
+    \makeatother
+    \setkomafont{author}{\large}
+    \setkomafont{date}{\large}
+    \setkomafont{section}{\LARGE}
+
+    \usepackage[margin=0.9in]{geometry}
+    }
+\fi
+
+\usepackage{silence} % for suppressing warnings :)
+
+%%%%% Fin
