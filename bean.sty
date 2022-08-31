@@ -4,12 +4,12 @@
 \newif\ifbeanfont     \beanfontfalse  
 \newif\ifbeanthmnum   \beanthmnumtrue
 \newif\ifbeanindent   \beanindenttrue 
-\newif\ifbeanpage	  \beanpagefalse 
+\newif\ifbeanpkg	  \beanpkgfalse 
 
 \DeclareOption{default_font}{\beanfonttrue}  % in the unlikely event, you don't like cmbright, the font is set back to normal   
 \DeclareOption{formal}{\beanthmnumfalse} % labels theorems with sections, i.e. theorem 5 in section 10 would be numbered 10.5 
 \DeclareOption{noindent}{\beanindentfalse} % removes indent
-\DeclareOption{page}{\beanpagetrue} % uses geometry to change page dimensions 
+\DeclareOption{only_pkg}{\beanpkgtrue} % uses geometry and setspace to change page dimensions 
 
 \ProcessOptions*
 
@@ -21,9 +21,10 @@
 	\setlength{\parindent}{0pt}
 \fi
 
-\ifbeanpage
+\ifbeanpage \else
 	\usepackage[left=0.8in, top=1.6cm, bottom=2.4cm, right=0.8in]{geometry}
-\else \fi
+    \usepackage[nodisplayskipstretch, onehalfspacing]{setspace}
+\fi
 
 \usepackage{amsmath, amssymb, amsthm} 
 \usepackage[svgnames, dvipsnames, usenames]{xcolor}
@@ -37,7 +38,6 @@
 \usepackage{graphicx} 
 \usepackage[T1]{fontenc} 
 \usepackage{verbatim} 
-\usepackage[nodisplayskipstretch, onehalfspacing]{setspace} 
 \usepackage{tikz, tikz-cd, pgfplots} 
 \pgfplotsset{compat=newest}
 \usepackage{silence} % for suppressing warnings
