@@ -5,19 +5,21 @@
 \newif\ifbeanthmnum   \beanthmnumtrue
 \newif\ifbeanindent   \beanindenttrue 
 \newif\ifbeanpkg	  \beanpkgfalse 
+\newif\ifbeanref      \beanreftrue
 
 \DeclareOption{default_font}{\beanfonttrue}  % in the unlikely event, you don't like cmbright, the font is set back to normal   
 \DeclareOption{formal}{\beanthmnumfalse} % labels theorems with sections, i.e. theorem 5 in section 10 would be numbered 10.5 
 \DeclareOption{noindent}{\beanindentfalse} % removes indent
 \DeclareOption{only_pkg}{\beanpkgtrue} % uses geometry and setspace to change page dimensions 
+\DeclareOption{noref}{\beanreffalse} % removes hyperref package to avoid conflicts
 
 \ProcessOptions*
 
-\ifbeanfont\else
+\ifbeanfont \else
     \usepackage{cmbright}
 \fi
 
-\ifbeanindent\else
+\ifbeanindent \else
 	\setlength{\parindent}{0pt}
 \fi
 
@@ -26,12 +28,15 @@
     \usepackage[nodisplayskipstretch, onehalfspacing]{setspace}
 \fi
 
+\ifbeanref
+    \usepackage[colorlinks]{hyperref} 
+    \PassOptionsToPackage{colorlinks}{hyperref}
+    \hypersetup{urlcolor = RedViolet, linkcolor = RoyalBlue, citecolor = ForestGreen}
+    \urlstyle{same}
+\else \fi
+
 \usepackage{amsmath, amssymb, amsthm} 
 \usepackage[svgnames, dvipsnames, usenames]{xcolor}
-\usepackage[colorlinks]{hyperref} 
-\PassOptionsToPackage{colorlinks}{hyperref}
-\hypersetup{urlcolor = RedViolet, linkcolor = RoyalBlue, citecolor = ForestGreen}
-\urlstyle{same}
 \usepackage{mhsetup, mathtools}
 
 \usepackage[capitalise]{cleveref}
