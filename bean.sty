@@ -139,7 +139,16 @@
 
 \declaretheorem[style=plain, name=Note, numbered=no]{note*}
 
-% Macros (none at the moment, will come soon)
+% Macros 
+%PL theory
+\usepackage{mathpartir}
+\newcommand{\inference}[3]{\inferrule*[Right=#1]{#2}{#3}}
+\newcommand{\axiom}[2]{\inferrule*[Right=#1]{\;}{#2}}
+\DeclareMathOperator{\bigstep}{\Downarrow}
+\DeclareMathOperator{\false}{\textbf{false}}
+\DeclareMathOperator{\true}{\mathbf{true}}
+\newcommand{\hoare}[3]{\{#1\} \; #2 \; \{#3\}}
+
 %functions
 \DeclareMathOperator{\ima}{im}
 
@@ -150,21 +159,6 @@
 \DeclareMathOperator{\Aut}{Aut}
 \DeclareMathOperator{\surj}{\twoheadrightarrow}
 \DeclareMathOperator{\inj}{\hookrightarrow} 
-
-%\mathbb font
-\renewcommand{\AA}{\mathbb A}
-\newcommand{\CC}{\mathbb C}
-\newcommand{\DD}{\mathbb D}
-\newcommand{\EE}{\mathbb E}
-\newcommand{\FF}{\mathbb F}
-\newcommand{\HH}{\mathbb H}
-\newcommand{\KK}{\mathbb K}
-\newcommand{\NN}{\mathbb N}
-\newcommand{\PP}{\mathbb P}
-\newcommand{\QQ}{\mathbb Q}
-\newcommand{\RR}{\mathbb R}
-\newcommand{\UU}{\mathbb U}
-\newcommand{\ZZ}{\mathbb Z}
 
 % Makes title bold 
 \makeatletter

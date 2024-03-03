@@ -1,4 +1,4 @@
-\ProvidesClass{BeanSET}
+\ProvidesClass{beanSET}
 \LoadClass[11pt]{article}
 
 \usepackage{fullpage}
